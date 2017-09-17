@@ -7,7 +7,9 @@ from libroomba import Roomba
 LOOKING_FOR = "water_bottle"
 
 def founditem(weightdict):
-    max(weightdict.items(), key=lambda x: x[1])[0]
+    result = max(weightdict.items(), key=lambda x: x[1])
+    if result[1] > 0.01:
+        return result[0]
 
 r = Roomba("/dev/ttyUSB0")
 r.send_opcode("CLEAN")
