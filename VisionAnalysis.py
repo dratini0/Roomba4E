@@ -7,6 +7,7 @@ import picamera, time
 def image_analysis():
     
     camera = picamera.PiCamera()
+    camera.rotation = 180
     
     imageInfo = {}
     
