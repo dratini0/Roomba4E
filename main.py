@@ -3,6 +3,7 @@
 
 from VisionAnalysis import image_analysis
 from libroomba import Roomba
+from sys import exit
 
 LOOKING_FOR = "water_bottle"
 THRESHOLD = .3
@@ -21,6 +22,16 @@ while True:
 
 r.send_opcode("CLEAN")
 
+for i in range(6):
+    result = image_analysis()
+    print(result)
+    if founditem(result):
+        break
+    r.turn_ccw_amount(60)
+else:
+    print("Not found after rotation")
+    exit()
+
 r.drive_straight(30)
 
 while True:
@@ -33,4 +44,3 @@ while True:
         break
 
 r.stop_drive()
-
