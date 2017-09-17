@@ -17,10 +17,10 @@ def image_analysis():
     }
 
     camera.capture('image.jpg')
-    f = open('/home/pi/image.jpg','rb')
+    f = open('~/Roomba4E/image.jpg','rb')
     image = f.read()
     f.close()
-    os.remove('/home/pi/image.jpg')
+    os.remove('~/Roomba4E/image.jpg')
 
     params = urllib.parse.urlencode({
     # Request parameters
