@@ -38,6 +38,8 @@ def image_analysis():
     
     d = json.loads(data)
 
+    imageInfo = {}
+
     for i in range (0,len(d["Predictions"])):
         imageInfo[str(d["Predictions"][i]["Tag"])] = d["Predictions"][i]["Probability"]
     
