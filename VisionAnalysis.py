@@ -39,10 +39,12 @@ def image_analysis():
 
     for i in range (0,len(d["Predictions"])):
         imageInfo[str(d["Predictions"][i]["Tag"])] = d["Predictions"][i]["Probability"]
-        
+    
+    conn.close() 
+       
     return(imageInfo)
 
-    conn.close()
+    
 
 
 print(image_analysis())
