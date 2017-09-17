@@ -9,8 +9,6 @@ def image_analysis():
     with picamera.PiCamera() as camera:
         camera.rotation = 180
         camera.capture('image.jpg')
-
-    time.sleep(1)
         
     headers = {
             # Request headers
@@ -25,7 +23,7 @@ def image_analysis():
 
     params = urllib.parse.urlencode({
     # Request parameters
-   'iterationId': '47f3a19e-e08d-4212-a0dc-ebef32f40dce',
+   'iterationId': '5ffde576-ccd0-487a-8bf6-f51a869d6a23',
    #'application': 'quicktest',
     })
 
