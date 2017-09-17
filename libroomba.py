@@ -133,7 +133,7 @@ class Roomba(object):
         preparedStruct = (0,)*7 + rawStruct
         return SensorData(*preparedStruct)
 
-    def turn_ccw_amount(self, angle, velocity=30):
+    def turn_ccw_amount(self, angle, velocity=100):
         self.get_sensors()
         self.spin_ccw(velocity)
         totalturn = 0
