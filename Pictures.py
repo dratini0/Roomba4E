@@ -11,7 +11,7 @@ import picamera, time
 camera = picamera.PiCamera()
 camera.rotation = 180
    
-for i in range (0,20):
+for i in range (21,41):
      
     camera.capture('/home/pi/image%s.jpg' %i)
     print('captured picture %s' %i)
