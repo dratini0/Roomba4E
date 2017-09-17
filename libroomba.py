@@ -133,6 +133,14 @@ class Roomba(object):
         preparedStruct = (0,)*7 + rawStruct
         return SensorData(*preparedStruct)
 
+    def turn_ccw_amount(self, angle, velocity=30):
+        self.get_sensors()
+        self.spin_ccw(velocity)
+        totalturn = 0
+        while totalturn < angle:
+            totalturn += self.get_sensors().angle
+        self.stop_drive()
+
 if __name__ == "__main__":
     r = Roomba()
     assert r.SENSOR_STRUCT.size == 80
