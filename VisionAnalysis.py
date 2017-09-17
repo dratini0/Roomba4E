@@ -6,21 +6,16 @@ import picamera, time
 
 def image_analysis():
     
-    camera = picamera.PiCamera()
-    camera.rotation = 180
-    
-    imageInfo = {}
-    
+    with picamera.PiCamera() as camera:
+        camera.rotation = 180
+        camera.capture('image.jpg')
+        
     headers = {
             # Request headers
             'Content-Type': 'application/octet-stream',
             'Prediction-key': '91916ba6f068410e86e939028982bc2a',
     }
 
-    camera.capture('image.jpg')
-    
-    time.sleep(1)
-    
     f = open('image.jpg','rb')
     image = f.read()
     f.close()
@@ -28,7 +23,7 @@ def image_analysis():
 
     params = urllib.parse.urlencode({
     # Request parameters
-   'iterationId': '47f3a19e-e08d-4212-a0dc-ebef32f40dce',
+   'iterationId': '5ffde576-ccd0-487a-8bf6-f51a869d6a23',
    #'application': 'quicktest',
     })
 
@@ -40,6 +35,8 @@ def image_analysis():
 
     
     d = json.loads(data)
+
+    imageInfo = {}
 
     for i in range (0,len(d["Predictions"])):
         imageInfo[str(d["Predictions"][i]["Tag"])] = d["Predictions"][i]["Probability"]
