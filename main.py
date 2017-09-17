@@ -12,6 +12,7 @@ def founditem(weightdict):
     return weightdict[LOOKING_FOR] > THRESHOLD
 
 r = Roomba("/dev/ttyUSB0")
+r.send_opcode("SAFE")
 r.send_opcode("CLEAN")
 
 while True:
