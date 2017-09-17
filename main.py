@@ -4,12 +4,18 @@
 from VisionAnalysis import image_analysis
 from libroomba import Roomba
 
+LOOKING_FOR = "water_bottle"
+
+def founditem(weightdict):
+    max(weightdict.items(), key=lambda x: x[1])[0]
+
 r = Roomba("/dev/ttyUSB0")
 r.send_opcode("CLEAN")
 
 while True:
     result = image_analysis()
-    if max(result.items(), key=lambda x: x[1])[0].lower() == "water bottle":
+    print(result)
+    if founditem(result) == LOOKING_FOR:
         break
 
 r.send_opcode("CLEAN")
@@ -21,7 +27,8 @@ while True:
     if sensorResult.light_bumper != 0:
         break
     result = image_analysis()
-    if max(result.items(), key=lambda x: x[1])[0].lower() == "water bottle":
+    print(result)
+    if founditem(result) != LOOKING_FOR:
         break
 
 r.stop_drive()
