@@ -13,7 +13,7 @@ def image_analysis():
     headers = {
             # Request headers
             'Content-Type': 'application/octet-stream',
-            'Prediction-key': '91916ba6f068410e86e939028982bc2a',
+            'Prediction-key': 'fc40ccc6a5ad4729b9151ede4f1a7fd1',
     }
 
     f = open('image.jpg','rb')
@@ -23,16 +23,18 @@ def image_analysis():
 
     params = urllib.parse.urlencode({
     # Request parameters
-   'iterationId': '5ffde576-ccd0-487a-8bf6-f51a869d6a23',
+   'iterationId': 'c3cfe161-a9e8-4bcd-a5a2-05a980d96563',
    #'application': 'quicktest',
     })
 
 
     conn = http.client.HTTPSConnection('southcentralus.api.cognitive.microsoft.com')
-    conn.request("POST", "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/f584ed23-b5b8-4b96-954d-a2f80ea0c373/inline/image?%s" %params, image, headers)
+    conn.request("POST","https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/cd8cb564-37bf-442a-842e-87857dd9359b/inline/image?%s" %params, image, headers)
+    
+    # "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/f584ed23-b5b8-4b96-954d-a2f80ea0c373/inline/image?%s
+    
     response = conn.getresponse()
     data = response.read().decode("ascii")
-
     
     d = json.loads(data)
 
