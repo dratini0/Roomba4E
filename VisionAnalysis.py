@@ -6,21 +6,18 @@ import picamera, time
 
 def image_analysis():
     
-    camera = picamera.PiCamera()
-    camera.rotation = 180
-    
-    imageInfo = {}
-    
+    with picamera.PiCamera() as camera:
+        camera.rotation = 180
+        camera.capture('image.jpg')
+
+    time.sleep(1)
+        
     headers = {
             # Request headers
             'Content-Type': 'application/octet-stream',
             'Prediction-key': '91916ba6f068410e86e939028982bc2a',
     }
 
-    camera.capture('image.jpg')
-    
-    time.sleep(1)
-    
     f = open('image.jpg','rb')
     image = f.read()
     f.close()
