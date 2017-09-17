@@ -2,7 +2,7 @@
 
 ##take pic, send to server, return what it thinks it is
 import http.client, urllib.request, urllib.parse, urllib.error, base64, json
-import picamera
+import picamera, time
 
 def image_analysis():
     
@@ -17,6 +17,9 @@ def image_analysis():
     }
 
     camera.capture('image.jpg')
+    
+    time.sleep(1)
+    
     f = open('~/Roomba4E/image.jpg','rb')
     image = f.read()
     f.close()
