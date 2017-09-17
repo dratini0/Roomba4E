@@ -136,9 +136,15 @@ if __name__ == "__main__":
     r = Roomba()
     assert r.SENSOR_STRUCT.size == 80
     r.send_opcode("SAFE")
-    r.drive_straight(-100)
-    time.sleep(1)
-    r.drive_straight(100)
-    time.sleep(1)
-    r.stop_drive()
     print(r.get_sensors())
+    while True:
+        sensorData = r.get_sensors()
+        print((
+            sensorData.light_bump_left_signal,
+            sensorData.light_bump_front_left_signal,
+            sensorData.light_bump_front_center_left_signal,
+            sensorData.light_bump_front_center_right_signal,
+            sensorData.light_bump_front_right_signal,
+            sensorData.light_bump_right_signal,
+        ))
+        time.sleep(1)
