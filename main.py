@@ -6,7 +6,7 @@ from libroomba import Roomba
 from sys import exit
 
 LOOKING_FOR = "water_bottle"
-THRESHOLD = .3
+THRESHOLD = .9
 
 def founditem(weightdict):
     return weightdict[LOOKING_FOR] > THRESHOLD
