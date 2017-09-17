@@ -23,7 +23,7 @@ def image_analysis():
     f = open('image.jpg','rb')
     image = f.read()
     f.close()
-    os.remove('image.jpg')
+    #os.remove('image.jpg')
 
     params = urllib.parse.urlencode({
     # Request parameters
@@ -35,7 +35,7 @@ def image_analysis():
     conn = http.client.HTTPSConnection('southcentralus.api.cognitive.microsoft.com')
     conn.request("POST", "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/f584ed23-b5b8-4b96-954d-a2f80ea0c373/inline/image?%s" %params, image, headers)
     response = conn.getresponse()
-    data = response.read()
+    data = response.read().decode("ascii")
 
     
     d = json.loads(data)
