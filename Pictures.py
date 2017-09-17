@@ -13,8 +13,8 @@ camera.rotation = 180
    
 for i in range (0,20):
      
-    camera.capture('/home/pi/image%s.jpg',i)
-    print('captured picture %s',i)
+    camera.capture('/home/pi/image%s.jpg',%i)
+    print('captured picture %s',%i)
     time.sleep(5)
    
     
