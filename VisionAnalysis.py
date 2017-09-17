@@ -2,29 +2,28 @@
 
 ##take pic, send to server, return what it thinks it is
 import http.client, urllib.request, urllib.parse, urllib.error, base64, json
-import picamera
+import picamera, time
 
 def image_analysis():
     
-    camera = picamera.PiCamera()
-    
-    imageInfo = {}
-    
+    with picamera.PiCamera() as camera:
+        camera.rotation = 180
+        camera.capture('image.jpg')
+        
     headers = {
             # Request headers
             'Content-Type': 'application/octet-stream',
             'Prediction-key': '91916ba6f068410e86e939028982bc2a',
     }
 
-    camera.capture('image.jpg')
-    f = open('/home/pi/image.jpg','rb')
+    f = open('image.jpg','rb')
     image = f.read()
     f.close()
-    os.remove('/home/pi/image.jpg')
+    #os.remove('image.jpg')
 
     params = urllib.parse.urlencode({
     # Request parameters
-   'iterationId': '47f3a19e-e08d-4212-a0dc-ebef32f40dce',
+   'iterationId': '5ffde576-ccd0-487a-8bf6-f51a869d6a23',
    #'application': 'quicktest',
     })
 
@@ -32,10 +31,12 @@ def image_analysis():
     conn = http.client.HTTPSConnection('southcentralus.api.cognitive.microsoft.com')
     conn.request("POST", "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/f584ed23-b5b8-4b96-954d-a2f80ea0c373/inline/image?%s" %params, image, headers)
     response = conn.getresponse()
-    data = response.read()
+    data = response.read().decode("ascii")
 
     
     d = json.loads(data)
+
+    imageInfo = {}
 
     for i in range (0,len(d["Predictions"])):
         imageInfo[str(d["Predictions"][i]["Tag"])] = d["Predictions"][i]["Probability"]
