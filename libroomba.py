@@ -80,6 +80,7 @@ class Roomba(object):
         "SAFE": 131,
         "FULL": 132,
         #Cleaning commands
+        "CLEAN": 135,
         #scheduling commands
         "DRIVE": 137,
         "DRIVE_DIRECT": 145,
