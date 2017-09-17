@@ -150,6 +150,7 @@ if __name__ == "__main__":
     #r.drive_straight(100)
     #time.sleep(1)
     #r.stop_drive()
+    r.turn_ccw_amount(90)
     while True:
         print(r.get_sensors())
         time.sleep(1)
