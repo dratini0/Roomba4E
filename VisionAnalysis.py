@@ -20,10 +20,10 @@ def image_analysis():
     
     time.sleep(1)
     
-    f = open('~/Roomba4E/image.jpg','rb')
+    f = open('image.jpg','rb')
     image = f.read()
     f.close()
-    os.remove('~/Roomba4E/image.jpg')
+    os.remove('image.jpg')
 
     params = urllib.parse.urlencode({
     # Request parameters
