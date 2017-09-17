@@ -94,7 +94,7 @@ class Roomba(object):
     }
 
     DRIVE_STRUCT = Struct(">hh")
-    SENSOR_STRUCT = Struct(">BBBBBBBBBBBBhhBHhbHHHHHHBHBBBBBhhhhhhBHHHHHHBBhhhhhB")
+    SENSOR_STRUCT = Struct(">BBBBBBBBBBBBhhBHhbHHHHHHBHBBBBBhhhhhhhBHHHHHHBBhhhhB")
 
     def __init__(self, portname="/dev/ttyUSB0"):
         self.serial = Serial(portname, self.DEFAULT_BAUD, timeout=1)
@@ -137,9 +137,11 @@ if __name__ == "__main__":
     r = Roomba()
     assert r.SENSOR_STRUCT.size == 80
     r.send_opcode("SAFE")
-    r.drive_straight(-100)
-    time.sleep(1)
-    r.drive_straight(100)
-    time.sleep(1)
-    r.stop_drive()
-    print(r.get_sensors())
+    #r.drive_straight(-100)
+    #time.sleep(1)
+    #r.drive_straight(100)
+    #time.sleep(1)
+    #r.stop_drive()
+    while True:
+        print(r.get_sensors())
+        time.sleep(1)
