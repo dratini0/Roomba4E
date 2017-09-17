@@ -4,6 +4,69 @@
 from serial import Serial
 from struct import Struct
 import time
+from collections import namedtuple
+
+SensorData = namedtuple("SensorData", [
+    "unused0",
+    "unused1",
+    "unused2",
+    "unused3",
+    "unused4",
+    "unused5",
+    "unused6",
+    "bumps_wheel_drops",
+    "wall",
+    "cliff_left",
+    "cliff_front_left",
+    "cliff_front_right",
+    "cliff_right",
+    "virtual_wall",
+    "wheel_overcurrents",
+    "dirt_detect",
+    "unused16",
+    "infrared_char_omni",
+    "buttons",
+    "distance",
+    "angle",
+    "charging_state",
+    "voltage",
+    "current",
+    "temperature",
+    "battery_charge",
+    "battery_capacity",
+    "wall_signal",
+    "cliff_left_signal",
+    "cliff_front_left_signal",
+    "cliff_front_right_signal",
+    "ciff_right_signal",
+    "unused32",
+    "unused33",
+    "charging_sources_available",
+    "oi_mode",
+    "song_number",
+    "song_playing",
+    "number_of_stream_packets",
+    "requested_velocity",
+    "requested_radius",
+    "requested_right_velocity",
+    "requested_left_velocity",
+    "left_encoder_counts",
+    "right_encoder_counts",
+    "light_bumper",
+    "light_bump_left_signal",
+    "light_bump_front_left_signal",
+    "light_bump_front_center_left_signal",
+    "light_bump_front_center_right_signal",
+    "light_bump_front_right_signal",
+    "light_bump_right_signal",
+    "infrared_char_left",
+    "infrared_char_right",
+    "left_motor_current",
+    "right_motor_current",
+    "main_brush_motor_currnet",
+    "side_brush_motor_current",
+    "stasis",
+])
 
 class Roomba(object):
 
@@ -53,6 +116,12 @@ class Roomba(object):
     def stop_drive(self):
         self.drive(0, 0)
 
+    def spin_cw(self, velocity):
+        self.drive(velocity, -1)
+
+    def spin_ccw(self, velocity):
+        self.drive(velocity, 1)
+
     def get_sensors(self):
         self.send_opcode("SENSORS")
         self.send_byte(100)
@@ -60,13 +129,15 @@ class Roomba(object):
         if len(data) < self.SENSOR_STRUCT.size:
             raise Exception("Only read {} bytes instead of {}".format(len(data), self.SENSOR_STRUCT.size))
         rawStruct = self.SENSOR_STRUCT.unpack(data)
-        return (0,)*7 + rawStruct
+        preparedStruct = (0,)*7 + rawStruct
+        return SensorData(*preparedStruct)
 
 if __name__ == "__main__":
     r = Roomba()
-    print(r.SENSOR_STRUCT.size)
     assert r.SENSOR_STRUCT.size == 80
     r.send_opcode("SAFE")
+    r.drive_straight(-100)
+    time.sleep(1)
     r.drive_straight(100)
     time.sleep(1)
     r.stop_drive()
