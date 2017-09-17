@@ -5,11 +5,10 @@ from VisionAnalysis import image_analysis
 from libroomba import Roomba
 
 LOOKING_FOR = "water_bottle"
+THRESHOLD = .3
 
 def founditem(weightdict):
-    result = max(weightdict.items(), key=lambda x: x[1])
-    if result[1] > 0.01:
-        return result[0]
+    return weightdict[LOOKING_FOR] > THRESHOLD
 
 r = Roomba("/dev/ttyUSB0")
 r.send_opcode("CLEAN")
@@ -17,7 +16,7 @@ r.send_opcode("CLEAN")
 while True:
     result = image_analysis()
     print(result)
-    if founditem(result) == LOOKING_FOR:
+    if founditem(result):
         break
 
 r.send_opcode("CLEAN")
@@ -30,7 +29,7 @@ while True:
         break
     result = image_analysis()
     print(result)
-    if founditem(result) != LOOKING_FOR:
+    if not founditem(result):
         break
 
 r.stop_drive()
